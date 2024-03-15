@@ -1,5 +1,6 @@
 # Building my first scraper!
 from urllib.request import urlopen
+import re
 
 
 # 1. Extract HTML
@@ -24,3 +25,26 @@ print(end_index)
 
 title = html[start_index:end_index]
 print(title)
+
+
+# 3. Working with Regular Expressions: Metacharacters
+
+## Asterix(*) stands for zero or more instances
+print(re.findall("ab*c", "ac"))
+print(re.findall("ab*c", "abcd"))
+print(re.findall("ab*c", "acc"))
+print(re.findall("ab*c", "abdc"))
+print(re.findall("ab*c", "ABC"))
+print(re.findall("ab*c", "ABC", re.IGNORECASE))
+
+## Period(.) stands for any single character
+print(re.findall("a.c", "abc"))
+print(re.findall("a.c", "abbc"))
+print(re.findall("a.c", "ac"))
+print(re.findall("a.c", "acc"))
+
+## Pattern (.*) stands for any character repeated any number of times
+print(re.findall("a.*c", "abc"))
+print(re.findall("a.*c", "abbc"))
+print(re.findall("a.*c", "ac"))
+print(re.findall("a.*c", "acc"))
