@@ -66,3 +66,7 @@ print(string)
 string = "Everything is <replaced> if it's in <tags>."
 string = re.sub("<.*?>", "ELEPHANTS", string)
 print(string)
+
+
+# 5. Extract text from HTML with regular expressions
+## Go to regex_dionysus.py
