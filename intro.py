@@ -69,4 +69,7 @@ print(string)
 
 
 # 5. Extract text from HTML with regular expressions
-## Go to regex_dionysus.py
+## Go to dionysus_regex.py
+
+
+# 6. Using a HTML parser for web scraping
