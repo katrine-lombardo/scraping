@@ -73,4 +73,9 @@ print(string)
 
 
 # 6. Using a HTML parser for web scraping
-## Go to beautifulsoup.py
+## Go to profiles_beautifulsoup.py
+
+
+# 7. Interact with HTML forms using a headless browser
+## Install MechanicalSoup: python -m pip install MechanicalSoup
+## Go to olympus_mechanicalsoup.py

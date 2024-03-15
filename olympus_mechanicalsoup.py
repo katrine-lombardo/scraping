@@ -1,0 +1,19 @@
+import mechanicalsoup
+
+# Create a browser instance to request URL
+browser = mechanicalsoup.Browser()
+url = "http://olympus.realpython.org/login"
+login_page = browser.get(url)
+
+# Inspect the .soup attribute to view HTML
+login_html = login_page.soup
+
+# Return a lost of all form elements on the page and set input values
+form = login_html.select("form")[0]
+form.select("input")[0]["value"] = "zeus"
+form.select("input")[1]["value"] = "ThunderDude"
+
+# Submit the form
+profiles_page = browser.submit(form, login_page.url)
+
+
