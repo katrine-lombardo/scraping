@@ -48,3 +48,21 @@ print(re.findall("a.*c", "abc"))
 print(re.findall("a.*c", "abbc"))
 print(re.findall("a.*c", "ac"))
 print(re.findall("a.*c", "acc"))
+
+
+# 4. MatchObject
+
+## re.search() returns every possible result
+## MatchObject.group() returns the first and most inclusive result
+match_results = re.search("ab*c", "ABC", re.IGNORECASE)
+print(match_results.group())
+
+## Greedy pattern: re.sub() replaces text in a string
+string = "Everything is <replaced> if it's in <tags>."
+string = re.sub("<.*>", "ELEPHANTS", string)
+print(string)
+
+## Non-greedy pattern(*?) matches the shortest possible string of text
+string = "Everything is <replaced> if it's in <tags>."
+string = re.sub("<.*?>", "ELEPHANTS", string)
+print(string)
