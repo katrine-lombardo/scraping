@@ -16,4 +16,10 @@ form.select("input")[1]["value"] = "ThunderDude"
 # Submit the form
 profiles_page = browser.submit(form, login_page.url)
 
-
+# Programmatically obtain the URL for each link on the /profiles page
+base_url = "http://olympus.realpython.org"
+links = profiles_page.soup.select("a")
+for link in links:
+    address = base_url + link["href"]
+    text = link.text
+    print(f"{text}: {address}")
