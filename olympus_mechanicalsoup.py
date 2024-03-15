@@ -23,3 +23,7 @@ for link in links:
     address = base_url + link["href"]
     text = link.text
     print(f"{text}: {address}")
+
+# Display the title of the current page to determine that you’ve been redirected
+# to the /profiles page
+print(profiles_page.soup.title)
