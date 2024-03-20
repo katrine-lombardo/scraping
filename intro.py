@@ -79,3 +79,21 @@ print(string)
 # 7. Interact with HTML forms using a headless browser
 ## Install MechanicalSoup: python -m pip install MechanicalSoup
 ## Go to olympus_mechanicalsoup.py
+
+
+# 8. Interact with sites in real time
+## Use .sleep() from Python's time module to pause
+import time
+
+print("I'm about to wait for five seconds...")
+time.sleep(5)
+print("Done waiting!")
+
+## Use range and if statement to stop after x requests
+
+for i in range(4):
+    # <Code here>
+
+    # Wait 10 seconds if this isn't the last request
+    if i < 3:
+        time.sleep(10)
