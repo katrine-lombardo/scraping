@@ -72,7 +72,7 @@ def process_apt_element(apt_element):
     unit_info = apt_element.find_element(By.CLASS_NAME, "ant-card-meta-title")
     unit_info_parts = unit_info.text.strip().split()
     unit_number = unit_info_parts[1] if len(unit_info_parts) > 1 else ""
-    location = unit_info_parts[2] if len(unit_info_parts) > 1 else ""
+    location = unit_info_parts[3] if len(unit_info_parts) > 1 else ""
     print(unit_number)
     print(location)
 
