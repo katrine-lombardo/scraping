@@ -1,4 +1,5 @@
 import os
+import time
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
@@ -33,12 +34,9 @@ def close_modal(driver):
 
 
 def click_load_all_button(driver):
-    wait = WebDriverWait(driver, 20)
-    load_all_button = driver.find_element(By.ID, "load-all-units")
-    wait.until(EC.element_to_be_clickable((By.ID, "load-all-units")))
-    driver.execute_script("arguments[0].scrollIntoView();", load_all_button)
-    actions = ActionChains(driver)
-    actions.move_to_element(load_all_button).click().perform()
+    wait = WebDriverWait(driver, 30)
+    load_all_button = wait.until(EC.element_to_be_clickable((By.ID, "load-all-units")))
+    driver.execute_script("arguments[0].click();", load_all_button)
 
 
 def wait_for_units_to_load(driver):
@@ -51,7 +49,19 @@ def wait_for_units_to_load(driver):
         print("Timeout waiting for units to load.")
 
 
+def scroll_to_bottom(driver):
+    last_height = driver.execute_script("return document.body.scrollHeight")
+    while True:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
+            break
+        last_height = new_height
+
+
 def process_apt_elements(driver):
+    scroll_to_bottom(driver)
     apt_elements = driver.find_elements(By.CLASS_NAME, "unit-item-details")
     print("number of units: ", len(apt_elements))
     for apt_element in apt_elements:
