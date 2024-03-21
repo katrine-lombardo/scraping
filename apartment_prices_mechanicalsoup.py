@@ -17,6 +17,9 @@ def navigate():
     browser.open(url)
     print(browser.url)
 
+    load_all_link = browser.page.select_one("button#load-all-units")
+    print(load_all_link)
+
 
 def handle_form():
     pass
