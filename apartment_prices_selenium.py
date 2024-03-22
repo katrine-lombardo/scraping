@@ -1,6 +1,8 @@
 import os
 import time
+import pandas as pd
 from dotenv import load_dotenv
+from datetime import datetime
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -63,9 +65,11 @@ def scroll_to_bottom(driver):
 def process_apt_elements(driver):
     scroll_to_bottom(driver)
     apt_elements = driver.find_elements(By.CLASS_NAME, "unit-item-details")
-    print("number of units: ", len(apt_elements))
+    data = []
     for apt_element in apt_elements:
-        process_apt_element(apt_element)
+        data.append(process_apt_element(apt_element))
+    df = pd.DataFrame(data)
+    return df
 
 
 def process_apt_element(apt_element):
@@ -73,32 +77,45 @@ def process_apt_element(apt_element):
     unit_info_parts = unit_info.text.strip().split()
     unit_number = unit_info_parts[1] if len(unit_info_parts) > 1 else ""
     location = unit_info_parts[3] if len(unit_info_parts) > 1 else ""
-    print(unit_number)
-    print(location)
 
     term_info = apt_element.find_element(By.CLASS_NAME, "term-length")
     term_parts = term_info.text.strip().split()
-    term_length_months = term_parts[1] if len(term_parts) > 1 else ""
-    print(term_length_months)
+    lease_length = term_parts[1] if len(term_parts) > 1 else ""
 
-    available_date = apt_element.find_element(By.CLASS_NAME, "available-date")
-    print(available_date.text.strip())
+    date_lease_start = apt_element.find_element(
+        By.CLASS_NAME, "available-date"
+    ).text.strip()
+    lease_start_object = datetime.strptime(date_lease_start, "%b %d")
+    lease_start = lease_start_object.strftime("%Y-%m-%d")
 
-    unit_price = apt_element.find_element(By.CLASS_NAME, "unit-price")
-    print(unit_price.text.strip())
+    currency_rent = apt_element.find_element(By.CLASS_NAME, "unit-price").text.strip()
+    rent = int(currency_rent.replace("$", "").replace(",", ""))
 
     description = apt_element.find_element(By.CLASS_NAME, "description")
     description_parts = description.text.strip().split()
     bedrooms = description_parts[0] if len(description_parts) > 1 else ""
     bathrooms = description_parts[3] if len(description_parts) > 1 else ""
     sqft = description_parts[6] if len(description_parts) > 1 else ""
-    print(bedrooms)
-    print(bathrooms)
-    print(sqft)
 
     details_link = apt_element.find_element(By.TAG_NAME, "a")
     unit_url = details_link.get_attribute("href")
-    print(unit_url)
+
+    recorded_datetime_stamp = datetime.now()
+    recorded_datetime = recorded_datetime_stamp.strftime("%Y-%m-%d %H:%M:%S")
+
+    data = {
+        "location": location,
+        "unit_number": unit_number,
+        "lease_start": lease_start,
+        "lease_length": lease_length,
+        "rent": rent,
+        "bedrooms": bedrooms,
+        "bathrooms": bathrooms,
+        "sqft": sqft,
+        "url": unit_url,
+        "recorded_datetime": recorded_datetime,
+    }
+    print(data)
 
 
 def main():
