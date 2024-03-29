@@ -115,7 +115,7 @@ def process_apt_element(apt_element):
         "url": unit_url,
         "recorded_datetime": recorded_datetime,
     }
-    print(data)
+    return data
 
 
 def main():
@@ -125,8 +125,10 @@ def main():
     close_modal(driver)
     click_load_all_button(driver)
     wait_for_units_to_load(driver)
+    df = process_apt_elements(driver)
     process_apt_elements(driver)
     driver.quit()
+    return df
 
 
 if __name__ == "__main__":
