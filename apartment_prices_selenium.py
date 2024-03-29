@@ -85,7 +85,7 @@ def process_apt_element(apt_element):
     date_lease_start = apt_element.find_element(
         By.CLASS_NAME, "available-date"
     ).text.strip()
-    lease_start_object = datetime.strptime(date_lease_start, "%b %d")
+    lease_start_object = datetime.strptime(date_lease_start, "%b %d").replace(year=2024)
     lease_start = lease_start_object.strftime("%Y-%m-%d")
 
     currency_rent = apt_element.find_element(By.CLASS_NAME, "unit-price").text.strip()
